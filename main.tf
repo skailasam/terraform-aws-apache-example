@@ -76,8 +76,13 @@ data "aws_ami" "linux-ubuntu-east" {
   }
 }
 
+data "local_file" "cloud-init" {
+    filename = "${path.module}/user_data.yaml"
+}
+
 data "template_file" "user_data" {
-  template = file("${abspath(path.root)}/terraform-aws-apache-example/user_data.yaml")
+  template = data.local_file.cloud-init.content
+    # file("${abspath(path.module)}/user_data.yaml")
 #   ${abspath(path.module)}
 }
 
