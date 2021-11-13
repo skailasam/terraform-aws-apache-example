@@ -77,7 +77,7 @@ data "aws_ami" "linux-ubuntu-east" {
 }
 
 data "template_file" "user_data" {
-  template = file("${abspath(path.module)}/userdata.yaml")
+  template = file("./userdata.yaml")
 }
 
 resource "aws_instance" "my_server" {
