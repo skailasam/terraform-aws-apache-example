@@ -77,7 +77,7 @@ data "aws_ami" "linux-ubuntu-east" {
 }
 
 data "template_file" "user_data" {
-  template = file("/home/carloscoppa/terraform/modules/terraform-aws-apache-example/user_data.yaml")
+  template = file("${abspath(path.module)}/userdata.yaml")
 }
 
 resource "aws_instance" "my_server" {
