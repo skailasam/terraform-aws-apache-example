@@ -76,17 +76,17 @@ data "aws_ami" "linux-ubuntu-east" {
   }
 }
 
-data "template_file" "user_data" {
-  template = "${file("${abspath(path.module)}/user_data.yaml")}"
-            #  "${file("${path.module}/mgt-user-data.sh")}"
-#   ${abspath(path.module)}
-}
+# data "template_file" "user_data" {
+#   template = "${file("${abspath(path.module)}/user_data.yaml")}"
+#             #  "${file("${path.module}/mgt-user-data.sh")}"
+# #   ${abspath(path.module)}
+# }
 
 resource "aws_instance" "my_server" {
   ami           = data.aws_ami.linux-ubuntu-east.id
   instance_type = var.instance_type
   key_name      = aws_key_pair.deployer.key_name
-  user_data     = data.template_file.user_data.rendered
+  user_data     = "${file("${abspath(path.module)}/user_data.yaml")}"  #data.template_file.user_data.rendered
   vpc_security_group_ids = [aws_security_group.sg_my_server.id]
 
   tags = {
