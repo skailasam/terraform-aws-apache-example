@@ -76,13 +76,9 @@ data "aws_ami" "linux-ubuntu-east" {
   }
 }
 
-data "local_file" "cloud-init" {
-    filename = "${path.module}/user_data.yaml"
-}
-
 data "template_file" "user_data" {
-  template = data.local_file.cloud-init.content
-    # file("${abspath(path.module)}/user_data.yaml")
+  template = "${file("${abspath(path.module)}/user_data.yaml")}"
+            #  "${file("${path.module}/mgt-user-data.sh")}"
 #   ${abspath(path.module)}
 }
 
